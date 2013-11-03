@@ -1,0 +1,3 @@
+[submodule "submodules/pokemondatacollector"]
+	path = submodules/pokemondatacollector
+	url = https://github.com/stefankendall/pokemondatacollector
