@@ -2,7 +2,7 @@
 
 import os
 
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '%s/sqlite.db' % BASE_PATH,                      # Or path to database file if using sqlite3.
+        'NAME': '%s/sqlite.db' % BASE_DIR,                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -143,6 +143,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ]
 }
+
+# Heroku specifics
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
