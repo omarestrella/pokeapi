@@ -14,15 +14,15 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '%s/sqlite.db' % BASE_DIR,                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #    'NAME': '%s/sqlite.db' % BASE_DIR,                      # Or path to database file if using sqlite3.
+    #    # The following settings are not used with sqlite3:
+    #    'USER': '',
+    #    'PASSWORD': '',
+    #    'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #    'PORT': '',                      # Set to empty string for default.
+    #}
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'pokeapi',
+    'django_filters',
     'south',
     'rest_framework'
 )
@@ -139,14 +140,18 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 REST_FRAMEWORK = {
     'DEFAULT_MODEL_SERIALIZER_CLASS': 'rest_framework.serializers.ModelSerializer',
 
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-    ]
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.SearchFilter',
+    )
 }
 
 # Heroku specifics
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] = dj_database_url.config(default='sqlite:///%s/sqlite.db' % BASE_DIR)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
